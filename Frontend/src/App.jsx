@@ -65,6 +65,9 @@ import PetList from './components/PetList';
 import Register from './components/Register';
 import Login from './components/Login';
 import PetForm from './components/PetForm';
+import PetDetails from './components/PetDetails';
+import AdoptionForm from './components/AdoptionForm';
+
 
 
 
@@ -85,14 +88,16 @@ function App() {
             {/* Login Route */}
             <Route path="/login" element={<Login />} />
 
-             
+            <Route path="/pets/:petId" element={<PetDetails/>} />
             <Route path='/add-Pet' element={<PetForm/>}/>
             
-            
+            <Route path="/adopt/:petId" element={<AdoptionForm />} />
        
           </Routes>
       </Router>
     </AuthProvider>
+
+  
 
 
 

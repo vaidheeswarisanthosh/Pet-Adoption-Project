@@ -1,4 +1,5 @@
 const Pet = require('../models/pet');
+const Shelter = require('../models/shelter');
 
 // Add a new pet
 exports.addPet = async (req, res) => {
@@ -7,9 +8,14 @@ exports.addPet = async (req, res) => {
     //   }
       
   try {
+    const shelterId = req.params.shelterId; // Get shelterId from route params
     const photos = req.files['photos']?.map((file) => file.path) || [];
     const videos = req.files['videos']?.map((file) => file.path) || [];
-    const petData = { ...req.body, photos, videos};
+    const petData = { ...req.body, photos, videos, shelterId };
+    const shelter = await Shelter.findById(shelterId);
+    if (!shelter) {
+      return res.status(404).json({ message: 'Shelter not found!' });
+    }
     const pet = new Pet(petData);
     await pet.save();
     res.status(201).json({ message: 'Pet added successfully!', pet });
@@ -37,7 +43,7 @@ exports.getPets = async (req, res) => {
 // Get a single pet by ID
 exports.getPetById = async (req, res) => {
   try {
-    const pet = await Pet.findById(req.params.id).populate('shelterId', 'name location');
+    const pet = await Pet.findById(req.params.id).populate('shelterId');
     if (!pet) return res.status(404).json({ message: 'Pet not found!' });
     res.json(pet);
   } catch (error) {

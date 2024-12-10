@@ -1,19 +1,15 @@
-// routes/adoptionRoutes.js
 const express = require('express');
 const router = express.Router();
-const { submitAdoptionRequest, getAdoptionRequests, sendMessage, getMessages } = require('../controllers/adoptionController');
 const { authenticate } = require('../middlewares/authenticate');
+const adoptionController = require('../controllers/adoptionController');
 
-// Submit adoption application
-router.post('/apply', authenticate, submitAdoptionRequest);
+// Adoption Requests
+router.post('/adoption/apply', authenticate, adoptionController.submitAdoptionRequest);
+// router.get('/adoption/requests', authenticate, adoptionController.getAdoptionRequests);
+// router.patch('/adoption/update', authenticate, adoptionController.updateAdoptionRequest);
 
-// View adoption applications (for shelters)
-router.get('/applications', authenticate, getAdoptionRequests);
-
-// Send message (for adopter/shelter communication)
-router.post('/message', authenticate, sendMessage);
-
-// Get messages for a specific adoption request
-router.get('/messages/:adoptionRequestId', authenticate, getMessages);
+// // Messages
+// router.post('/adoption/message', authenticate, adoptionController.sendMessage);
+// router.get('/adoption/messages/:adoptionRequestId', authenticate, adoptionController.getMessages);
 
 module.exports = router;

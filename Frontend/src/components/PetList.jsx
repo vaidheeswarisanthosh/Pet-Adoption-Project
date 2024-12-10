@@ -278,61 +278,162 @@
 
 
 
-import { useEffect, useState } from 'react';
- import axios from 'axios';
+// import { useEffect, useState } from 'react';
+//  import axios from 'axios';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+
+// const PetList = () => {
+//   const [pets, setPets] = useState([]);
+//   const [filteredPets, setFilteredPets] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   // Fetch pets from the backend
+//   useEffect(() => {
+//     const fetchPets = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:3006/api/'); // Your API endpoint
+//         setPets(response.data); // Store pets in state
+//         setFilteredPets(response.data); // Initially, show all pets
+//         setLoading(false); // Set loading state to false
+//       } catch (err) {
+//         setError('Failed to fetch pets');
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchPets();
+//   }, []);
+
+//   // Handle filter and sort changes...
+//   // The filter and sorting logic goes here.
+
+//   if (loading) {
+//     return <p className="text-center text-xl">Loading pets...</p>;
+//   }
+
+//   if (error) {
+//     return <p className="text-center text-xl text-red-500">{error}</p>;
+//   }
+
+//   return (
+//     <div className="pets-list container mx-auto p-6">
+//       <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Available Pets</h1>
+
+//       {/* Display Pets */}
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+//         {filteredPets.map((pet) => (
+//           <div
+//             key={pet._id}
+//             className="pet-card bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-2xl"
+//           >
+//             {/* Pet Image */}
+//             <div className="pet-image">
+//               {pet.photos ? (
+//                 <img
+//                   src={`http://localhost:3006/${pet.photos}`}
+//                   alt={pet.name}
+//                   className="w-full h-48 object-cover"
+//                 />
+//               ) : (
+//                 <p className="text-center text-gray-500 p-4">No photo available</p>
+//               )}
+//             </div>
+
+//             <div className="p-4">
+//               <h2 className="text-xl font-semibold text-blue-600">{pet.name}</h2>
+//               <p>Breed: {pet.breed}</p>
+//               <p>Age: {pet.age}</p>
+//               <p>Location: {pet.location}</p>
+              
+//               {/* More Details Button */}
+//               <Link 
+//                 to={`pets/${pet._id}`} 
+//                 className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+//               >
+//                 More Details
+//               </Link>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PetList;
+
+
+
+
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const PetList = () => {
   const [pets, setPets] = useState([]);
-  const [filteredPets, setFilteredPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Fetch pets from the backend
-  useEffect(() => {
-    const fetchPets = async () => {
-      try {
-        const response = await axios.get('http://localhost:3006/api/'); // Your API endpoint
-        setPets(response.data); // Store pets in state
-        setFilteredPets(response.data); // Initially, show all pets
-        setLoading(false); // Set loading state to false
-      } catch (err) {
-        setError('Failed to fetch pets');
-        setLoading(false);
-      }
-    };
+  const fetchPets = async () => {
+    try {
+      const response = await axios.get("http://localhost:3006/api/"); // Ensure the endpoint is correct
+      setPets(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to fetch pets");
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPets();
   }, []);
 
-  // Handle filter and sort changes...
-  // The filter and sorting logic goes here.
-
   if (loading) {
-    return <p className="text-center text-xl">Loading pets...</p>;
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div
+            key={index}
+            className="animate-pulse bg-gray-200 shadow-lg rounded-lg h-48"
+          ></div>
+        ))}
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-center text-xl text-red-500">{error}</p>;
+    return (
+      <div className="text-center">
+        <p className="text-xl text-red-500">{error}</p>
+        <button
+          onClick={fetchPets}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        >
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (
     <div className="pets-list container mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Available Pets</h1>
 
-      {/* Display Pets */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredPets.map((pet) => (
+        {pets.map((pet) => (
           <div
             key={pet._id}
             className="pet-card bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-2xl"
           >
-            {/* Pet Image */}
             <div className="pet-image">
-              {pet.photos ? (
+              {pet.photos?.length > 0 ? (
                 <img
-                  src={`http://localhost:3006/${pet.photos}`}
+                  src={`http://localhost:3006/${pet.photos[0]}`}
                   alt={pet.name}
                   className="w-full h-48 object-cover"
                 />
@@ -343,17 +444,23 @@ const PetList = () => {
 
             <div className="p-4">
               <h2 className="text-xl font-semibold text-blue-600">{pet.name}</h2>
-              <p>Breed: {pet.breed}</p>
+              <p className="truncate">Breed: {pet.breed}</p>
               <p>Age: {pet.age}</p>
               <p>Location: {pet.location}</p>
-              
-              {/* More Details Button */}
-              <Link 
-                to={`pets/${pet._id}`} 
+
+              {/* <Link
+                to={`api/${pet._id}`}
                 className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
                 More Details
-              </Link>
+              </Link> */}
+
+       <Link 
+       to={`/pets/${pet._id}`} 
+        className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+         >
+  More Details
+</Link>
             </div>
           </div>
         ))}
@@ -363,7 +470,5 @@ const PetList = () => {
 };
 
 export default PetList;
-
-
 
 

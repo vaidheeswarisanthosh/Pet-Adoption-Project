@@ -10,7 +10,11 @@ const petSchema = new mongoose.Schema({
   photos: { type: [String] },
   videos: { type: [String] },
   status: { type: String, enum: ['Available', 'Fostered', 'Adopted'], default: 'Available' },
-  shelterId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
+  shelterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Shelter",
+    required: true, // Make it required for every pet to have a shelter
+  },
 });
 
 module.exports = mongoose.model('Pet', petSchema);

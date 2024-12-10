@@ -323,95 +323,192 @@
 
 
 
-import { useState } from 'react'; 
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+// import { useState } from 'react'; 
+// import { useAuth } from '../context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
+
+// const Login = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const { login } = useAuth();
+//   const navigate = useNavigate();
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+
+//     // Simulate an API call to login (replace this with your actual login API)
+//     try {
+//       // This is a mock API response for illustration
+//       const response = {
+//         email,
+//         role: 'admin', // Replace with the role from your backend response (e.g., 'admin', 'adopter', 'shelter')
+//       };
+      
+//       if (response.role) {
+//         login(response); // Store user data in context
+        
+//         // Redirect user based on their role
+//         if (response.role === 'admin') {
+//           navigate('/admin-dashboard');
+//         } else if (response.role === 'adopter') {
+//           navigate('/adopter-dashboard');
+//         } else if (response.role === 'shelter') {
+//           navigate('/shelter-dashboard');
+//         }
+//       } else {
+//         // Handle invalid login (wrong credentials, etc.)
+//         alert('Invalid credentials');
+//       }
+//     } catch (error) {
+//       console.error('Login failed', error);
+//       alert('Something went wrong, please try again!');
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+//       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+//         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Login</h2>
+//         <form onSubmit={handleLogin} className="space-y-4">
+//           <div>
+//             <input
+//               type="email"
+//               placeholder="Email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+//           <div>
+//             <input
+//               type="password"
+//               placeholder="Password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+//           <button
+//             type="submit"
+//             className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//           >
+//             Login
+//           </button>
+//         </form>
+//         <div className="mt-4 text-center">
+//           <p className="text-sm text-gray-500">
+//             Don't have an account?{' '}
+//             <span
+//               onClick={() => navigate('/register')}
+//               className="text-blue-600 cursor-pointer hover:underline"
+//             >
+//               Register here
+//             </span>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+import  { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
-    // Simulate an API call to login (replace this with your actual login API)
     try {
-      // This is a mock API response for illustration
-      const response = {
-        email,
-        role: 'admin', // Replace with the role from your backend response (e.g., 'admin', 'adopter', 'shelter')
-      };
+      const response = await axios.post("http://localhost:3006/api/users/login", { email, password });
+      const { token, role } = response.data;
+      console.log(response.data); 
+
+      // Store token in localStorage
+      localStorage.setItem("token", token);
+      console.log("Token:", localStorage.getItem("token"));
+      localStorage.setItem("token", response.data.token);
+     
+      // Redirect to the appropriate dashboard
       
-      if (response.role) {
-        login(response); // Store user data in context
-        
-        // Redirect user based on their role
-        if (response.role === 'admin') {
-          navigate('/admin-dashboard');
-        } else if (response.role === 'adopter') {
-          navigate('/adopter-dashboard');
-        } else if (response.role === 'shelter') {
-          navigate('/shelter-dashboard');
-        }
+      if (role === "Adopter") {
+        console.log("Redirecting to Adopter Dashboard");
+        navigate("/adopter/dashboard");
+      } else if (role === "Shelter") {
+        console.log("Redirecting to Shelter Dashboard");
+        navigate("/shelter/dashboard");
+      } else if (role === "Admin") {
+        console.log("Redirecting to Admin Dashboard");
+        navigate("/admin/dashboard");
       } else {
-        // Handle invalid login (wrong credentials, etc.)
-        alert('Invalid credentials');
+        setError("Invalid user role.");
       }
-    } catch (error) {
-      console.error('Login failed', error);
-      alert('Something went wrong, please try again!');
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed!");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Login</h2>
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
+      <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Email</label>
             <input
               type="email"
-              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              required
             />
           </div>
-          <div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Password</label>
             <input
               type="password"
-              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full py-2 rounded-lg text-white font-bold ${
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-500">
-            Don't have an account?{' '}
-            <span
-              onClick={() => navigate('/register')}
-              className="text-blue-600 cursor-pointer hover:underline"
-            >
-              Register here
-            </span>
-          </p>
-        </div>
       </div>
     </div>
   );
 };
 
 export default Login;
+
 
 
 

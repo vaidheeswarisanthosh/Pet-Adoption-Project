@@ -64,6 +64,7 @@ import NavBar from './components/NavBar'; // Import NavBar
 import PetList from './components/PetList';
 import Register from './components/Register';
 import Login from './components/Login';
+import PetForm from './components/PetForm';
 
 
 
@@ -85,7 +86,7 @@ function App() {
             <Route path="/login" element={<Login />} />
 
              
-            
+            <Route path='/add-Pet' element={<PetForm/>}/>
             
             
        

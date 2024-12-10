@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const User = require('./user');
 const petSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: { type: Number, required: true },
@@ -10,7 +10,7 @@ const petSchema = new mongoose.Schema({
   photos: { type: [String] },
   videos: { type: [String] },
   status: { type: String, enum: ['Available', 'Fostered', 'Adopted'], default: 'Available' },
-  shelterId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shelter', required: false },
+  shelterId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
 });
 
 module.exports = mongoose.model('Pet', petSchema);

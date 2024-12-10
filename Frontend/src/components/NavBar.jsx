@@ -270,6 +270,13 @@ const NavBar = () => {
             >
               Register
             </Link>
+            <Link
+              to="/add-pet"
+              className="text-lg font-medium hover:text-blue-300 transition-colors py-2 text-white"
+              aria-label="Register"
+            >
+              add pet
+            </Link>
           </>
         )}
       </div>

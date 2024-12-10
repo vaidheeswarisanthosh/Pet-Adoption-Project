@@ -55,7 +55,7 @@ const PetForm = () => {
 
     try {
       // Send a POST request to the backend
-      const response = await axios.post('http://localhost:3004/api/pets', formData, {
+      const response = await axios.post('http://localhost:3006/api/pets', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ensures the data is sent as multipart/form-data
         },

@@ -2,14 +2,14 @@ const Pet = require('../models/pet');
 
 // Add a new pet
 exports.addPet = async (req, res) => {
-    if (req.user.role !== "shelter") {
-        return res.status(403).json({ message: "Only shelters can add pets." });
-      }
+    // if (req.user.role !== "shelter") {
+    //     return res.status(403).json({ message: "Only shelters can add pets." });
+    //   }
       
   try {
     const photos = req.files['photos']?.map((file) => file.path) || [];
     const videos = req.files['videos']?.map((file) => file.path) || [];
-    const petData = { ...req.body, photos, videos,shelter: req.user.id };
+    const petData = { ...req.body, photos, videos};
     const pet = new Pet(petData);
     await pet.save();
     res.status(201).json({ message: 'Pet added successfully!', pet });

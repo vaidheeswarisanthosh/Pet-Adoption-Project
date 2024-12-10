@@ -6,7 +6,7 @@ const cors=require('cors');
 const path = require('path');
 const fs = require('fs');
 const userRoutes=require('./routes/userRoutes');
-const adoptionRoutes = require("./routes/adoptionRoutes");
+const adoptionRoutes=require('./routes/adoptionRoutes');
 
 
 
@@ -57,5 +57,6 @@ app.use('/api', petRoutes);
 
 app.use('/api/users', userRoutes);
 
-app.use("/api/adoptions", adoptionRoutes);
+app.use('/api/',adoptionRoutes);
+
 module.exports=app;

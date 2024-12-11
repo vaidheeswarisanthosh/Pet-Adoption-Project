@@ -162,6 +162,7 @@ const PetDetails = () => {
       } catch (err) {
         setError("Failed to fetch pet details");
         setLoading(false);
+        console.error(err);
       }
     };
 
@@ -181,14 +182,14 @@ const PetDetails = () => {
   };
 
   return (
-    <div className="pet-detail container mx-auto p-6 my-16 ">
+    <div className=" container mx-auto p-6 ">
      
       <div className="pet-info text-center">
         <h2 className="text-2xl font-bold mb-4">Pet Details</h2>
         <img
           src={`http://localhost:3006/${pet.photos}`}
           alt={pet.name}
-          className="w-full h-64 object-cover mb-4"
+          className="w-full h-64 object-cover mb-4 "
         />
          <h1 className="text-xl font-bold ">{pet.name}</h1>
 

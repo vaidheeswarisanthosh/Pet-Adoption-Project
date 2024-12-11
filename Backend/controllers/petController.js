@@ -1,4 +1,5 @@
 const Pet = require('../models/pet');
+const User = require('../models/user');
 const Shelter = require('../models/shelter');
 
 // Add a new pet
@@ -8,10 +9,11 @@ exports.addPet = async (req, res) => {
     //   }
       
   try {
-    const shelterId = req.params.shelterId; // Get shelterId from route params
+    // const shelterId = req.params.shelterId; // Get shelterId from route params
     const photos = req.files['photos']?.map((file) => file.path) || [];
     const videos = req.files['videos']?.map((file) => file.path) || [];
-    const petData = { ...req.body, photos, videos, shelterId };
+    const petData = { ...req.body, photos, videos,  shelterId: req.user.id };
+    console.log(petData);
     const shelter = await Shelter.findById(shelterId);
     if (!shelter) {
       return res.status(404).json({ message: 'Shelter not found!' });

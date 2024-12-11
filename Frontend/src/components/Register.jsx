@@ -151,12 +151,12 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 mx-14 py-14">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg border border-gray-200">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
+        <h2 className="text-xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <div className="mb-5">
+          <div className="mb-2">
             <label htmlFor="name" className="block text-sm font-medium text-gray-600">Name</label>
             <input
               type="text"
@@ -164,10 +164,10 @@ const Register = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="mb-5">
+          <div className="mb-2">
             <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
             <input
               type="email"
@@ -178,7 +178,7 @@ const Register = () => {
               className="w-full p-3 mt-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="mb-5">
+          <div className="mb-2">
             <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password</label>
             <div className="relative">
               <input
@@ -198,7 +198,7 @@ const Register = () => {
               </button>
             </div>
           </div>
-          <div className="mb-5">
+          <div className="mb-2">
             <label htmlFor="role" className="block text-sm font-medium text-gray-600">Role</label>
             <select
               id="role"
@@ -218,7 +218,7 @@ const Register = () => {
             Register
           </button>
         </form>
-        <div className="mt-6 text-center text-sm">
+        <div className="mt-2 text-center text-sm">
           <span className="text-gray-600">Already have an account? </span>
           <button
             onClick={handleLoginRedirect}

@@ -1,7 +1,11 @@
+import PetForm from "./PetForm";
+
+
 const ShelterDashboard = () => {
     return (
-      <div>
-        <h1>Welcome to the Shelter Dashboard</h1>
+      <div className="p-4 m-14">
+        <h1 className="text-xl font-bold mt-6">Welcome to the Shelter Dashboard</h1>
+       <PetForm/>
       </div>
     );
   };

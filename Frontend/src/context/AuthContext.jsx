@@ -35,26 +35,64 @@
 
 
 
- import  { createContext, useContext, useState } from 'react';
+//  import  { createContext, useContext, useState } from 'react';
 
-// // Create the context
+// // // Create the context
+// const AuthContext = createContext();
+
+//  // Custom hook to use the Auth context
+// export const useAuth = () => {
+//   return useContext(AuthContext);
+// };
+
+// // AuthProvider component to provide the context to children
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState(null); // Initially user is null
+
+//   const login = (userData) => {
+//     console.log("Login function called");
+//     setUser(userData); // Set user when logged in
+//     localStorage.setItem("user", JSON.stringify(userData));
+//     console.log("User logged in:", userData);
+//   };
+
+//   const logout = () => {
+//     setUser(null); // Clear user when logged out
+//     localStorage.removeItem("user");
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+
+
+
+
+import { createContext, useContext, useState } from 'react';
+
 const AuthContext = createContext();
 
- // Custom hook to use the Auth context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// AuthProvider component to provide the context to children
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Initially user is null
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
   const login = (userData) => {
-    setUser(userData); // Set user when logged in
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('authToken', userData.token); // Store token too
   };
 
   const logout = () => {
-    setUser(null); // Clear user when logged out
+    setUser(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('authToken');
   };
 
   return (
@@ -63,9 +101,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-
-
-
-
 

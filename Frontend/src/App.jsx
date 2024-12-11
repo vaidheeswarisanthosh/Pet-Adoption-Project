@@ -112,70 +112,65 @@
 
 
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import AdopterDashboard from "./components/AdopterDashboard";
-import PrivateRoutes from "./components/PrivateRoutes";
+// import PrivateRoutes from "./components/PrivateRoutes";
 import ShelterDashboard from "./components/ShelterDashboard ";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import AdminDashboard from "./components/AdminDashboard";
 import NavBar from "./components/NavBar";
-import PetList from "./components/PetList";
+// import PetList from "./components/PetList";
 import PetDetails from "./components/PetDetails";
-import PetForm from "./components/PetForm";
-import AdoptionForm from "./components/AdoptionForm";
+// import PetForm from "./components/PetForm";
+// import AdoptionForm from "./components/AdoptionForm";
 import { AuthProvider } from "./context/AuthContext";
-
+import Unauthorized from "./components/Unauthorized";
+import PetList from "./components/PetList";
 
 const App = () => {
   return (
     <AuthProvider>
+       
     <Router>
-       <NavBar/>
-      <Routes>
-           {/* Home Route */}
-                      <Route path="/" element={<PetList/>} />
+    <NavBar/>
+       <Routes>
+          
+         <Route path="/" element={<Register/>} />
             
-                      {/* Register Route */}
-                      <Route path="/register" element={<Register/>} />
+        {/* <Route path="/register" element={<Register/>} />  */}
                         
-                       {/* Login Route */}
-                       <Route path="/login" element={<Login />} />
-             
-                   <Route path="/pets/:petId" element={<PetDetails/>} />
-                <Route path='/add-Pet' element={<PetForm/>}/>
+        <Route path="/login" element={<Login />} />
+        
+     
+        <Route path="/pets/:petId" element={<PetDetails/>} />
+       {/* <Route path='/add-Pet' element={<PetForm/>}/>  */}
                         
-             <Route path="/adopt/:petId" element={<AdoptionForm />} />   
+         {/* <Route path="/adopt/:petId" element={<AdoptionForm />} />    */}
             
-        <Route
-          path="/adopter/dashboard"
+          <Route
+          path="/dashboard/adopter"
           element={
-            <PrivateRoutes role="adopter">
-              <AdopterDashboard />
-            </PrivateRoutes>
-          }
-        />
+          <AdopterDashboard />
+         }
+         /> 
         <Route
-          path="/shelter/dashboard"
+          path="/dashboard/shelter"
           element={
-            <PrivateRoutes role="shelter">
-              <ShelterDashboard />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/admin/dashboard"
+          <ShelterDashboard />
+              }
+        /> 
+         <Route
+          path="/dashboard/admin"
           element={
-            <PrivateRoutes role="admin">
-              <AdminDashboard />
-            </PrivateRoutes>
+          <AdminDashboard />
           }
-        />
-        <Route path="*" element={<Navigate to="/login" />} />
+        /> 
+       <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>
-    </Router>
+     </Router>
     </AuthProvider>
   );
 };
 
-export default App;
+export default App; 

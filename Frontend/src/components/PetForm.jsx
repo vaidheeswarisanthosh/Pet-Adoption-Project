@@ -35,6 +35,16 @@ const PetForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+        // Get the token from localStorage
+        
+        const token = localStorage.getItem("token");
+        
+        console.log(token);
+
+        if (!token) {
+          console.error("Token is not available");
+          return; // Optionally handle the case where the token is missing
+        }
 
     // Create FormData object to handle file uploads
     const formData = new FormData();
@@ -58,7 +68,13 @@ const PetForm = () => {
       const response = await axios.post('http://localhost:3006/api/pets', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Ensures the data is sent as multipart/form-data
+          Authorization: `Bearer ${token}`, 
+          
         },
+
+
+       
+        
       });
 
       // Handle success

@@ -1,27 +1,81 @@
-const Pet = require('../models/pet');
-const User = require('../models/user');
-const Shelter = require('../models/shelter');
+// const Pet = require('../models/pet');
+// const User = require('../models/user');
+// const Shelter = require('../models/shelter');
 
-// Add a new pet
-exports.addPet = async (req, res) => {
-    // if (req.user.role !== "shelter") {
-    //     return res.status(403).json({ message: "Only shelters can add pets." });
-    //   }
+// // Add a new pet
+// exports.addPet = async (req, res) => {
+//     if (req.user.role !== "shelter") {
+//         return res.status(403).json({ message: "Only shelters can add pets." });
+//       }
       
+//   try {
+//     // const shelterId = req.params.shelterId; // Get shelterId from route params
+//     const photos = req.files['photos']?.map((file) => file.path) || [];
+//     const videos = req.files['videos']?.map((file) => file.path) || [];
+//     const petData = { ...req.body, photos, videos,  shelterId: req.user.id };
+//     console.log(petData);
+//     const shelter = await Shelter.findById(shelterId);
+//     if (!shelter) {
+//       return res.status(404).json({ message: 'Shelter not found!' });
+//     }
+//     const pet = new Pet(petData);
+//     await pet.save();
+//     res.status(201).json({ message: 'Pet added successfully!', pet });
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };
+
+
+const Pet = require("../models/pet");
+const Shelter = require("../models/Shelter");
+const User = require("../models/user");
+
+exports.addPet = async (req, res) => {
   try {
-    // const shelterId = req.params.shelterId; // Get shelterId from route params
-    const photos = req.files['photos']?.map((file) => file.path) || [];
-    const videos = req.files['videos']?.map((file) => file.path) || [];
-    const petData = { ...req.body, photos, videos,  shelterId: req.user.id };
-    console.log(petData);
-    const shelter = await Shelter.findById(shelterId);
-    if (!shelter) {
-      return res.status(404).json({ message: 'Shelter not found!' });
+    const shelterId = req.params.shelterId;
+    // Ensure the user is a shelter
+    // if (req.user.role !== "Shelter") {
+    //   return res.status(403).json({ message: "Only shelters can add pets." });
+    // }
+
+      // Ensure the user is authenticated and has a shelterId
+      if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: "Authentication token is missing or invalid." });
+      }
+
+       // Ensure the user has the 'shelter' role
+    if (req.user.role !== "Shelter") {
+      return res.status(403).json({ message: "Only shelters can add pets." });
     }
+
+    // Handle uploaded files
+    const photos = req.files["photos"]?.map((file) => file.path) || [];
+    const videos = req.files["videos"]?.map((file) => file.path) || [];
+
+    // Prepare pet data
+    const petData = {
+      ...req.body,
+      photos,
+      videos,
+      shelterId: req.user.id
+     
+      // shelterId: req.user.id, // Shelter ID from the authenticated user
+    };
+
+    // Validate shelter existence
+    // const shelter = await Shelter.findById(req.user.id);
+    // if (!shelter) {
+    //   return res.status(404).json({ message: "Shelter not found!" });
+    // }
+
+    // Create and save the pet
     const pet = new Pet(petData);
     await pet.save();
-    res.status(201).json({ message: 'Pet added successfully!', pet });
+
+    res.status(201).json({ message: "Pet added successfully!", pet });
   } catch (error) {
+    console.error("Error adding pet:", error);
     res.status(400).json({ error: error.message });
   }
 };

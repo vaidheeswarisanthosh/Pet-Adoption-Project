@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const shelterSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  location: { type: String, required: true },
-  contact: { type: String, required: true },
-  description: String,
+  address: { type: String, required: true },
+  contactNumber: { type: String },
+  email: { type: String, required: true },
+  // Add any other relevant fields
 });
 
-const Shelter = mongoose.model("Shelter", shelterSchema);
+const Shelter = mongoose.model('Shelter', shelterSchema);
 
 module.exports = Shelter;

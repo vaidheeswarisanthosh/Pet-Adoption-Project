@@ -164,7 +164,7 @@ const login= async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
-
+    
     // Send user data and token
     res.status(200).json({
       email: user.email,
@@ -179,35 +179,45 @@ const login= async (req, res) => {
 
 
 
+// const jwt = require("jsonwebtoken");
+// const User = require("../models/user");
+// require("dotenv").config();
+// const bcrypt = require("bcrypt");
 
-// const login = async (req, res) => {
+// const login= async (req, res) => {
 //   const { email, password } = req.body;
 
 //   try {
+//     // Find the user by email
 //     const user = await User.findOne({ email });
 //     if (!user) {
-//       return res.status(404).json({ message: "User not found!" });
+//       return res.status(404).json({ message: 'User not found' });
 //     }
 
-//     const isPasswordValid = await user.comparePassword(password); // Assuming a bcrypt password comparison
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ message: "Invalid credentials!" });
+//     // Check if the password is correct
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ message: 'Invalid credentials' });
 //     }
 
-//     // Generate a JWT token
-//     const token = jwt.sign(
-//       { id: user._id, role: user.role },
-//       process.env.JWT_SECRET,
-//       { expiresIn: "1d" }
-//     );
+//      // Create JWT payload - you can add any other user info here
+//      const payload = {
+//       id: user._id, // User ID from the database
+//       role: user.role, // User role (e.g., Admin, Shelter, Adopter)
+//       email: user.email // You can include other details if needed
+//     };
 
+//      // Generate JWT token with the payload, secret key, and expiry time
+//      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" })
+    
+//     // Send user data and token
 //     res.status(200).json({
-//       message: "Login successful",
+      
 //       token,
-//       role: user.role, // Include user role in the response
 //     });
 //   } catch (error) {
-//     res.status(500).json({ error: error.message });
+//     console.error('Login error:', error);
+//     res.status(500).json({ message: 'Internal server error' });
 //   }
 // };
 

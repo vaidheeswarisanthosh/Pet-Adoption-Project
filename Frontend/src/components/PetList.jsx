@@ -338,7 +338,7 @@ const PetList = () => {
   }
 
   return (
-    <div className="pets-list container mx-auto p-6">
+    <div className="pets-list container mx-auto p-6 space-x-7">
       <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Available Pets</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

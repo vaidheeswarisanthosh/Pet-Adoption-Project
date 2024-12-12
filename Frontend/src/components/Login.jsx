@@ -518,9 +518,236 @@
 
 
 
+// import { useState } from 'react';
+// import { useAuth } from '../context/AuthContext'; // Assuming you have AuthContext for storing user data
+// import { useNavigate } from 'react-router-dom';
+
+// const Login = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const { login } = useAuth();
+//   const navigate = useNavigate();
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await fetch('http://localhost:3006/api/users/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
+
+//       if (response.ok) {
+//         const data = await response.json();
+//         const { token, role } = data; // Backend should return the token and role
+
+//         // Store token and user data in context
+//         login({ email, role, token });
+        
+
+//         // Store JWT token in localStorage for authentication persistence
+//         localStorage.setItem('authToken', token);
+//         console.log('login User role:', role);
+//         // Redirect user based on their role
+//         if (role === 'Admin') {
+//           navigate('/dashboard/admin');
+//         } else if (role === 'Adopter') {
+//           navigate('/dashboard/adopter');
+//         } else if (role === 'Shelter') {
+//           navigate('/dashboard/shelter');
+//         } else {
+//           alert('Unknown role');
+//         }
+//       } else {
+//         const error = await response.json();
+//         alert(error.message || 'Invalid credentials');
+//       }
+//     } catch (error) {
+//       console.error('Login failed', error);
+//       alert('Something went wrong, please try again!');
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gray-100 mx-10">
+//       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+//         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Login</h2>
+//         <form onSubmit={handleLogin} className="space-y-4">
+//           <div>
+//             <input
+//               type="email"
+//               placeholder="Email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+//           <div>
+//             <input
+//               type="password"
+//               placeholder="Password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+//           <button
+//             type="submit"
+//             className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//           >
+//             Login
+//           </button>
+//         </form>
+//         <div className="mt-4 text-center">
+//           <p className="text-sm text-gray-500">
+//             Don't have an account?{' '}
+//             <span
+//               onClick={() => navigate('/')}
+//               className="text-blue-600 cursor-pointer hover:underline"
+//             >
+//               Register here
+//             </span>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+
+
+// import { useState } from 'react';
+// import axios from 'axios';  // Import Axios
+// import { useAuth } from '../context/AuthContext'; // Assuming you have AuthContext for storing user data
+// import { useNavigate } from 'react-router-dom';
+
+// const Login = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [loading, setLoading] = useState(false); // Loading state
+//   const { login } = useAuth();
+//   const navigate = useNavigate();
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+
+//     // Basic validation
+//     if (!email || !password) {
+//       alert("Please fill in both email and password");
+//       return;
+//     }
+
+//     setLoading(true); // Start loading
+
+//     try {
+//       const response = await axios.post('http://localhost:3006/api/users/login', {
+//         email,
+//         password,
+//       }, {
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       });
+
+//       const { token, role } = response.data; // Axios response contains data directly
+
+//       // Store token and user data in context
+//       login({ email, role, token });
+      
+
+//       // Store JWT token in localStorage for authentication persistence
+//       localStorage.setItem('authToken', token);
+//       console.log('Token:',token);
+//       console.log('Login successful, User role:', role);
+
+//       // Redirect user based on their role
+//       if (role === 'Admin') {
+//         navigate('/dashboard/admin');
+//         console.log('Navigating to admin dashboard...');
+//       } else if (role === 'Adopter') {
+//         navigate('/dashboard/adopter');
+//         console.log('Navigating to adopter dashboard...');
+//       } else if (role === 'Shelter') {
+//         navigate('/dashboard/shelter');
+//         console.log('Navigating to shelter dashboard...');
+//       } else {
+//         alert('Unknown role');
+//       }
+//     } catch (error) {
+//       console.error('Login failed', error);
+//       alert(error.response?.data?.message || 'Something went wrong, please try again!');
+//     } finally {
+//       setLoading(false); // Stop loading
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gray-100 mx-10">
+//       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+//         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Login</h2>
+//         <form onSubmit={handleLogin} className="space-y-4">
+//           <div>
+//             <input
+//               type="email"
+//               placeholder="Email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+//           <div>
+//             <input
+//               type="password"
+//               placeholder="Password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             />
+//           </div>
+//           <button
+//             type="submit"
+//             className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             disabled={loading} // Disable button while loading
+//           >
+//             {loading ? 'Logging in...' : 'Login'}
+//           </button>
+//         </form>
+//         <div className="mt-4 text-center">
+//           <p className="text-sm text-gray-500">
+//             Don't have an account?{' '}
+//             <span
+//               onClick={() => navigate('/')}
+//               className="text-blue-600 cursor-pointer hover:underline"
+//             >
+//               Register here
+//             </span>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+// src/components/Login.jsx
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext'; // Assuming you have AuthContext for storing user data
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -532,26 +759,23 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3006/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post('http://localhost:3006/api/users/login', {
+        email,
+        password
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        const { token, role } = data; // Backend should return the token and role
-
-        // Store token and user data in context
-        login({ email, role, token });
+      if (response.status === 200) {
+        const { token, role } = response.data; // Assuming backend returns token and role
         
+        // Store token in AuthContext (if you are using it)
+        login({ email, role, token });
 
-        // Store JWT token in localStorage for authentication persistence
+        // Store token in localStorage for persistence
         localStorage.setItem('authToken', token);
-        console.log('login User role:', role);
-        // Redirect user based on their role
+
+        console.log('Login successful, User role:', role);
+
+        // Redirect based on user role
         if (role === 'Admin') {
           navigate('/dashboard/admin');
         } else if (role === 'Adopter') {
@@ -562,8 +786,7 @@ const Login = () => {
           alert('Unknown role');
         }
       } else {
-        const error = await response.json();
-        alert(error.message || 'Invalid credentials');
+        alert('Login failed: Invalid credentials');
       }
     } catch (error) {
       console.error('Login failed', error);
@@ -605,7 +828,7 @@ const Login = () => {
           <p className="text-sm text-gray-500">
             Don't have an account?{' '}
             <span
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/register')}
               className="text-blue-600 cursor-pointer hover:underline"
             >
               Register here
@@ -618,8 +841,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-

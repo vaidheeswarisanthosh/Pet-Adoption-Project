@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const {authenticate }= require("../middlewares/authenticate");
+const {authenticate}= require("../middlewares/authenticate");
 const {
   addPet,
   getPets,

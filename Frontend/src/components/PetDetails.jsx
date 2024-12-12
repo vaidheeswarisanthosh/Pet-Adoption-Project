@@ -185,7 +185,7 @@ const PetDetails = () => {
   };
 
   return (
-    <div className=" container mx-auto p-6 ">
+    <div className=" container mx-auto p-6 mt-12 text-bold">
      
       <div className="pet-info text-center">
         <h2 className="text-2xl font-bold mb-4">Pet Details</h2>
@@ -203,7 +203,7 @@ const PetDetails = () => {
         <p>Medical History: {pet.MedicalHistory}</p>
         <p>status:{pet.status}</p>
         
-        <button onClick={handleAdoptClick} className="btn btn-primary">
+        <button onClick={handleAdoptClick} className="btn border-t-cyan-900 text-black bg-blue-400">
         Adopt
       </button>
 

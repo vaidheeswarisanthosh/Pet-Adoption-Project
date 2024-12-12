@@ -248,11 +248,11 @@ const AdoptionForm = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container text-center p-4 mt-12 px-auto mx-auto ">
       <h2 className="text-2xl font-bold mb-4">Adoption Form</h2>
       <form onSubmit={handleSubmit} className="border p-4 rounded shadow">
         <div className="mb-4">
-          <label htmlFor="reasonForAdoption" className="block text-sm font-medium mb-2">
+          <label htmlFor="reasonForAdoption" className="block text-sm font-medium mb-2 border-lg border-gray-500">
             Why do you want to adopt this pet?
           </label>
           <textarea
@@ -260,7 +260,7 @@ const AdoptionForm = () => {
             name="reasonForAdoption"
             value={formData.reasonForAdoption}
             onChange={handleInputChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border-l-gray-500 rounded"
             rows="4"
             required
           ></textarea>

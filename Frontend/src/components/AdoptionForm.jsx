@@ -192,84 +192,103 @@
 
 
 
-import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import  { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function AdoptionForm() {
-  const [searchParams] = useSearchParams();
+const AdoptionForm = () => {
+  const { petId } = useParams(); // Extract petId from the route
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    reasonForAdoption: '',
+    message: '',
+  });
 
-  const [petId, setPetId] = useState(searchParams.get("petId") || "");
-  const [shelterId, setShelterId] = useState(searchParams.get("shelterId") || "");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!petId || !shelterId) {
-      alert("Missing adoption details. Please return to the pet page and try again.");
-      navigate("/pets"); // Redirect to the pet listing page
-    }
-  }, [petId, shelterId, navigate]);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "http://localhost:3006/api/adoption/apply",
-        { petId, shelterId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert(response.data.message);
-      navigate("/success"); // Redirect to success page
+      const token = localStorage.getItem('authToken'); // Retrieve token for authentication
+      if (!token) {
+        alert('Please log in to submit an application.');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3006/api//adoption/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          petId,
+          reasonForAdoption: formData.reasonForAdoption,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        alert('Form submitted successfully!');
+        navigate('/dashboard/adopter'); // Redirect after submission
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to submit the form: ${errorData.message}`);
+      }
     } catch (error) {
-      console.error(error);
-      alert("Error submitting adoption application.");
-    } finally {
-      setLoading(false);
+      console.error('Error submitting the adoption form:', error);
+      alert('An error occurred while submitting the form.');
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md border border-gray-200">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-          Adoption Form
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Pet ID</label>
-            <input
-              type="text"
-              value={petId}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Shelter ID</label>
-            <input
-              type="text"
-              value={shelterId}
-              readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100 cursor-not-allowed"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-2 rounded-lg font-medium text-white ${
-              loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-            }`}
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
-        </form>
-      </div>
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Adoption Form</h2>
+      <form onSubmit={handleSubmit} className="border p-4 rounded shadow">
+        <div className="mb-4">
+          <label htmlFor="reasonForAdoption" className="block text-sm font-medium mb-2">
+            Why do you want to adopt this pet?
+          </label>
+          <textarea
+            id="reasonForAdoption"
+            name="reasonForAdoption"
+            value={formData.reasonForAdoption}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="message" className="block text-sm font-medium mb-2">
+            Additional Message (optional)
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded"
+            rows="4"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-4 py-2 rounded"
+        >
+          Submit Application
+        </button>
+      </form>
     </div>
   );
-}
+};
 
 export default AdoptionForm;
+
+

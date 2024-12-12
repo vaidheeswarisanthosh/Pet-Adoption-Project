@@ -142,13 +142,15 @@
 
 
 
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+// import AdoptionForm from "./AdoptionForm";
 
 const PetDetails = () => {
   const { petId } = useParams();
   const [pet, setPet] = useState(null);
+  // const [showAdoptionForm, setShowAdoptionForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -178,7 +180,8 @@ const PetDetails = () => {
   }
 
   const handleAdoptClick = () => {
-    navigate(`/adopt?petId=${pet._id}&shelterId=${pet.shelterId}`);
+    navigate(`/adopt/${pet._id}`);
+    console.log("pet id:", pet._id);
   };
 
   return (
@@ -200,12 +203,11 @@ const PetDetails = () => {
         <p>Medical History: {pet.MedicalHistory}</p>
         <p>status:{pet.status}</p>
         
-      <button
-        onClick={handleAdoptClick}
-        className="mt-6 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-center"
-      >
-        Adopt Me!
+        <button onClick={handleAdoptClick} className="btn btn-primary">
+        Adopt
       </button>
+
+
       
       </div>
       

@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['Adopter', 'Shelter', 'Admin'], required: true,default: "adopter" }, // Role to distinguish user types
+  role: { type: String, enum: ['Adopter', 'Shelter', 'Admin'], required: true,default: "adopter" }, 
+  
   createdAt: { type: Date, default: Date.now },
 });
 

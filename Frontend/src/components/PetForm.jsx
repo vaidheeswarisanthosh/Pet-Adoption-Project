@@ -1,6 +1,7 @@
 // src/components/PetForm.jsx
 import { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosInstance from '../utils/axios'; 
 
 const PetForm = () => {
   const [petData, setPetData] = useState({
@@ -37,7 +38,8 @@ const PetForm = () => {
     e.preventDefault();
         // Get the token from localStorage
         
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")?.trim();
+        console.log("Token local storage ");
         
         console.log(token);
 
@@ -65,18 +67,16 @@ const PetForm = () => {
 
     try {
       // Send a POST request to the backend
-      const response = await axios.post('http://localhost:3006/api/pets', formData, {
+      console.log("Form data being sent:", formData);
+      const response = await axiosInstance.post('http://localhost:3006/api/pets', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Ensures the data is sent as multipart/form-data
+          // Ensures the data is sent as multipart/form-data
           Authorization: `Bearer ${token}`, 
+           'Content-Type': 'multipart/form-data'
           
-        },
-
-
-       
-        
+        },  
       });
-
+       console.log("token", token);
       // Handle success
       console.log('Pet added successfully:', response.data);
       alert('Pet added successfully!');

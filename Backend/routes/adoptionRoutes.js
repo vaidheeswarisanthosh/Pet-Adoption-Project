@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { authenticate } = require('../middlewares/authenticate');
-const adoptionController = require('../controllers/adoptionController');
+const { protect } = require('../middlewares/authenticate');
+const {submitAdoptionRequest}= require('../controllers/adoptionController');
 
 // Adoption Requests
-router.post('/adoption/apply', authenticate, adoptionController.submitAdoptionRequest);
+router.post('/adoption/apply', protect, submitAdoptionRequest);
 // router.get('/adoption/requests', authenticate, adoptionController.getAdoptionRequests);
 // router.patch('/adoption/update', authenticate, adoptionController.updateAdoptionRequest);
 

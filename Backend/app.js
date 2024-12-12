@@ -7,12 +7,12 @@ const path = require('path');
 const fs = require('fs');
 const userRoutes=require('./routes/userRoutes');
 const adoptionRoutes=require('./routes/adoptionRoutes');
-
+const cookieParser = require('cookie-parser');
 
 
 app.use(cors());
 app.use(express.json());
-
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 // app.use('/uploads', express.static('uploads')); // Serve static files

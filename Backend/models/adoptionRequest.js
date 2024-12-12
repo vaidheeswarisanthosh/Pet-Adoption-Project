@@ -15,13 +15,11 @@
 const mongoose = require('mongoose');
 
 const adoptionRequestSchema = new mongoose.Schema({
-  adopter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  shelter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet', required: true },
+  adopterId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  petId: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet', required: true },
+  reasonForAdoption: { type: String, required: true },
+  message: { type: String },
   status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
-  meetAndGreetDate: { type: Date }, // Scheduled meet-and-greet date
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('AdoptionRequest', adoptionRequestSchema);

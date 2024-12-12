@@ -126,7 +126,10 @@ import PetDetails from "./components/PetDetails";
 // import AdoptionForm from "./components/AdoptionForm";
 import { AuthProvider } from "./context/AuthContext";
 import Unauthorized from "./components/Unauthorized";
-import PetList from "./components/PetList";
+import AdoptionForm from "./components/AdoptionForm";
+
+
+
 
 const App = () => {
   return (
@@ -137,16 +140,20 @@ const App = () => {
        <Routes>
           
          <Route path="/" element={<Register/>} />
+
+       
             
         {/* <Route path="/register" element={<Register/>} />  */}
                         
         <Route path="/login" element={<Login />} />
         
-     
+        
         <Route path="/pets/:petId" element={<PetDetails/>} />
        {/* <Route path='/add-Pet' element={<PetForm/>}/>  */}
+
+       
                         
-         {/* <Route path="/adopt/:petId" element={<AdoptionForm />} />    */}
+         <Route path="/adopt/:petId" element={<AdoptionForm/>} />   
             
           <Route
           path="/dashboard/adopter"

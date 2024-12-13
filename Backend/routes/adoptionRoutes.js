@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middlewares/authenticate');
-const {submitAdoptionRequest}= require('../controllers/adoptionController');
+const {submitAdoptionRequest,getApplicationsForShelter,updateApplicationStatus}= require('../controllers/adoptionController');
 
 // Adoption Requests
 router.post('/adoption/apply', protect, submitAdoptionRequest);
-// router.get('/adoption/requests', authenticate, adoptionController.getAdoptionRequests);
-// router.patch('/adoption/update', authenticate, adoptionController.updateAdoptionRequest);
+// router.get('/shelter-applications', getApplicationsForShelter);
+// router.post('/message/:id', sendMessage);
+// router.put('/schedule/:id', scheduleMeet);
 
-// // Messages
-// router.post('/adoption/message', authenticate, adoptionController.sendMessage);
-// router.get('/adoption/messages/:adoptionRequestId', authenticate, adoptionController.getMessages);
+// router.get('/shelter-applications/:shelter',getApplicationsForShelter);
+
+// router.put('/application/review/:applicationId', protect, updateApplicationStatus);
 
 module.exports = router;

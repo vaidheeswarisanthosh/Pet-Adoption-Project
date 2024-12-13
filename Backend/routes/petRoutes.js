@@ -7,7 +7,7 @@ const {
   getPetById,
   updatePet,
   deletePet,
-  getFilterPets
+ 
 } = require('../controllers/petController');
 
 const router = express.Router();

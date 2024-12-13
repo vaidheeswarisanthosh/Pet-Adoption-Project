@@ -224,8 +224,10 @@
 // src/components/PetForm.jsx
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const PetForm = () => {
+  const navigate = useNavigate();
   const [petData, setPetData] = useState({
     name: '',
     age: '',
@@ -297,6 +299,7 @@ const PetForm = () => {
 
       console.log("Pet added successfully:", response.data);
       alert('Pet added successfully!');
+      navigate('/dashboard/shelter');
       setPetData({
         name: '',
         age: '',
@@ -314,10 +317,10 @@ const PetForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Add Pet for Adoption</h2>
+    <div className="max-w-2xl mx-auto p-4 mt-8">
+      <h2 className="text-xl font-bold mb-4 mt-10">Add Pet for Adoption</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="mb-4">
+        <div className="mb-4 mt-9">
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
           <input
             type="text"

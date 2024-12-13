@@ -7,6 +7,7 @@ const {
   getPetById,
   updatePet,
   deletePet,
+  getFilterPets
 } = require('../controllers/petController');
 
 const router = express.Router();
@@ -21,9 +22,10 @@ const upload = multer({ storage });
 
 // Routes
 router.post('/pets',authenticate, upload.fields([{ name: 'photos' }, { name: 'videos' }]), addPet);
-router.get('/', getPets);
+router.get('/pets', getPets);
 router.get('/:id', getPetById);
-router.put('/:id', updatePet);
-router.delete('/:id', deletePet);
+router.put('/:id',authenticate, updatePet);
+router.delete('/:id',authenticate, deletePet);
+// router.get('/pets', getFilterPets);
 
 module.exports = router;

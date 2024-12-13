@@ -127,6 +127,8 @@ import PetDetails from "./components/PetDetails";
 import { AuthProvider } from "./context/AuthContext";
 import Unauthorized from "./components/Unauthorized";
 import AdoptionForm from "./components/AdoptionForm";
+import PetForm from "./components/PetForm";
+import EditPet from "./components/EditPet";
 
 
 
@@ -141,7 +143,7 @@ const App = () => {
           
          <Route path="/" element={<Register/>} />
 
-       
+          <Route path="/add-pet" element={<PetForm/>} />
             
         {/* <Route path="/register" element={<Register/>} />  */}
                         
@@ -151,6 +153,9 @@ const App = () => {
         <Route path="/pets/:petId" element={<PetDetails/>} />
        {/* <Route path='/add-Pet' element={<PetForm/>}/>  */}
 
+       <Route path="/pets/add" element={<PetForm />} />
+         
+       <Route path="/pets/edit/:id" element={<EditPet />} />
        
                         
          <Route path="/adopt/:petId" element={<AdoptionForm/>} />   

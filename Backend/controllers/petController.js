@@ -1,30 +1,3 @@
-// const Pet = require('../models/pet');
-// const User = require('../models/user');
-// const Shelter = require('../models/shelter');
-
-// // Add a new pet
-// exports.addPet = async (req, res) => {
-//     if (req.user.role !== "shelter") {
-//         return res.status(403).json({ message: "Only shelters can add pets." });
-//       }
-      
-//   try {
-//     // const shelterId = req.params.shelterId; // Get shelterId from route params
-//     const photos = req.files['photos']?.map((file) => file.path) || [];
-//     const videos = req.files['videos']?.map((file) => file.path) || [];
-//     const petData = { ...req.body, photos, videos,  shelterId: req.user.id };
-//     console.log(petData);
-//     const shelter = await Shelter.findById(shelterId);
-//     if (!shelter) {
-//       return res.status(404).json({ message: 'Shelter not found!' });
-//     }
-//     const pet = new Pet(petData);
-//     await pet.save();
-//     res.status(201).json({ message: 'Pet added successfully!', pet });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
 
 const Pet = require("../models/pet");
@@ -35,9 +8,7 @@ exports.addPet = async (req, res) => {
   try {
     const shelterId = req.params.shelterId;
     // Ensure the user is a shelter
-    // if (req.user.role !== "Shelter") {
-    //   return res.status(403).json({ message: "Only shelters can add pets." });
-    // }
+    
 
       // Ensure the user is authenticated and has a shelterId
       if (!req.user || !req.user.id) {
@@ -60,7 +31,7 @@ exports.addPet = async (req, res) => {
       videos,
       shelterId: req.user.id
      
-      // shelterId: req.user.id, // Shelter ID from the authenticated user
+      
     };
 
     // Validate shelter existence
@@ -80,21 +51,21 @@ exports.addPet = async (req, res) => {
   }
 };
 
-// Get all pets with filters
-exports.getPets = async (req, res) => {
-  const { breed, age, size } = req.query;
-  const filters = {};
-  if (breed) filters.breed = breed;
-  if (age) filters.age = age;
-  if (size) filters.size = size;
+// // Get all pets with filters
+// exports.getPets = async (req, res) => {
+//   const { breed, age, size } = req.query;
+//   const filters = {};
+//   if (breed) filters.breed = breed;
+//   if (age) filters.age = age;
+//   if (size) filters.size = size;
 
-  try {
-    const pets = await Pet.find(filters).populate('shelterId', 'name location');
-    res.json(pets);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//   try {
+//     const pets = await Pet.find(filters).populate('shelterId', 'name location');
+//     res.json(pets);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 // Get a single pet by ID
 exports.getPetById = async (req, res) => {
@@ -108,23 +79,77 @@ exports.getPetById = async (req, res) => {
 };
 
 // Update pet information
+// exports.updatePet = async (req, res) => {
+//   try {
+//     const updatedPet = await Pet.findByIdAndUpdate(req.params.id, req.body, { new: true });
+//     if (!updatedPet) return res.status(404).json({ message: 'Pet not found!' });
+//     res.json({ message: 'Pet updated successfully!', updatedPet });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+
+
 exports.updatePet = async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
   try {
-    const updatedPet = await Pet.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedPet) return res.status(404).json({ message: 'Pet not found!' });
-    res.json({ message: 'Pet updated successfully!', updatedPet });
+    const updatedPet = await Pet.findByIdAndUpdate(id, updates, { new: true });
+    if (!updatedPet) {
+      return res.status(404).json({ message: 'Pet not found' });
+    }
+    res.status(200).json(updatedPet);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'Error updating pet', error });
   }
 };
+
+  
 
 // Delete a pet
 exports.deletePet = async (req, res) => {
   try {
     const deletedPet = await Pet.findByIdAndDelete(req.params.id);
     if (!deletedPet) return res.status(404).json({ message: 'Pet not found!' });
+
+      // Check if the user is either Admin or Shelter and is authorized to delete the pet
+      if (req.user.role !== 'Admin' && req.user.role !== 'Shelter') {
+        return res.status(403).json({ message: 'Not authorized' });
+      }
+  
     res.json({ message: 'Pet deleted successfully!' });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.getPets= async (req, res) => {
+  try {
+    const { searchTerm, size, sortBy } = req.query;
+    
+    // Build search query
+    const query = {};
+    if (searchTerm) {
+      query.name = { $regex: searchTerm, $options: 'i' }; // Case-insensitive search
+    }
+    if (size) {
+      query.size = size;
+    }
+    
+
+    // Sort options
+    const sortOptions = {};
+    if (sortBy === 'name') sortOptions.name = 1;
+    if (sortBy === 'age') sortOptions.age = 1;
+    if (sortBy === 'status') sortOptions.status = 1;
+
+    const pets = await Pet.find(query).sort(sortOptions);
+    res.json(pets);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching pets' });
   }
 };

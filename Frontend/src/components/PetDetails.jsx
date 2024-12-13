@@ -200,7 +200,7 @@ const PetDetails = () => {
         <p>Breed: {pet.breed}</p>
         <p>Size: {pet.size}</p>
         <p>color: {pet.color}</p>
-        <p>Medical History: {pet.MedicalHistory}</p>
+        <p>Medical History: {pet.medicalHistory}</p>
         <p>status:{pet.status}</p>
         
         <button onClick={handleAdoptClick} className="btn border-t-cyan-900 text-black bg-blue-400">

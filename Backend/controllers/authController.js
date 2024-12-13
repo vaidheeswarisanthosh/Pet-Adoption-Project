@@ -59,76 +59,55 @@ const register = async (req, res) => {
 
 
 
-// // Utility function to generate JWT token
-// const generateAccessToken = (user) => {
-//   return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-// };
-
-// // Login function (generates access token and refresh token)
-// const login = async (req, res) => {
-//   const { username, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ username });
-//     if (!user) {
-//       return res.status(400).json({ message: 'Invalid credentials' });
-//     }
-
-//     // Check password
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.status(400).json({ message: 'Invalid credentials' });
-//     }
-
-//     // Generate tokens
-//     const accessToken = generateAccessToken(user);
-//     const refreshToken = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
-
-//     // Optional: Store refresh token in the database (for security reasons)
-//     await Token.create({ userId: user._id, refreshToken });
-
-//     // Send refresh token as an HTTP-only cookie
-//     res.cookie('refreshToken', refreshToken, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === 'production', // Set to true in production
-//       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-//     });
-
-//     // Send access token in response
-//     res.json({ accessToken });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// };
-
-// // Token refresh function
-// const refreshToken = async (req, res) => {
-//   const refreshToken = req.cookies.refreshToken;
-
-//   if (!refreshToken) {
-//     return res.status(401).json({ message: 'Refresh token missing' });
-//   }
-
-//   try {
-//     // Verify the refresh token
-//     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-//     const user = await User.findById(decoded.id);
-
-//     if (!user) {
-//       return res.status(401).json({ message: 'User not found' });
-//     }
-
-//     // Generate new access token
-//     const accessToken = generateAccessToken(user);
-    
-//     // Send new access token
-//     res.json({ accessToken });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(403).json({ message: 'Invalid or expired refresh token' });
-//   }
-// };
+// Fetch all users
+const getAllUsers = async (req, res) => {
+  try {
+    console.log('Fetching all users...');
+    const users = await User.find({}, '-password'); // Exclude passwords for security
+    console.log('Users fetched:', users);
+    res.status(200).json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: 'Error fetching users' });
+  }
+};
 
 
-module.exports = { login, register };
+const updateUserRole = async (req, res) => {
+  const { userId } = req.params;
+  const { role } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    user.role = role;
+    await user.save();
+    res.status(200).json({ message: 'User role updated successfully', user });
+  } catch (err) {
+    console.error('Error updating user role:', err);
+    res.status(500).json({ error: 'Error updating user role' });
+  }
+};
+
+// Delete a user
+const deleteUser = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting user:', err);
+    res.status(500).json({ error: 'Error deleting user' });
+  }
+};
+
+
+module.exports = { login, register, getAllUsers ,updateUserRole,deleteUser};

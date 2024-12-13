@@ -90,6 +90,8 @@ Save to the database and display on the platform.
 
 # Features:
 
+Manage all users (adopters, shelters, and admins).
+
 View and moderate all pet profiles and adoption applications.
 
 
@@ -102,3 +104,14 @@ The logout button allows users to securely end their session and is an essential
 Purpose: Ends the user’s session by removing their authentication token.
 
 Effect: Redirects the user to the home or login page.
+
+
+# Technology Stack
+
+Frontend: React, React Router, TailwindCSS
+
+Backend: Node.js, Express.js
+
+Database: MongoDB
+
+Authentication: JWT-based secure login

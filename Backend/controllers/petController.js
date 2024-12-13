@@ -16,7 +16,7 @@ exports.addPet = async (req, res) => {
       }
 
        // Ensure the user has the 'shelter' role
-    if (req.user.role !== "Shelter") {
+    if (req.user.role !== "Shelter" && req.user.role !== "Admin") {
       return res.status(403).json({ message: "Only shelters can add pets." });
     }
 

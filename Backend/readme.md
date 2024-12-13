@@ -46,4 +46,16 @@
 # End Point: POST api/adoption/apply
 
 
-#
+# Get all Users for Admin Dashboard
+
+#  End Point: GET api/users/admin
+
+
+# Update a User Role
+
+# End Point : PUT api/users/admin/:userId
+
+
+# Delete a User
+
+# End Point : DELETE /api/users/admin/:userId

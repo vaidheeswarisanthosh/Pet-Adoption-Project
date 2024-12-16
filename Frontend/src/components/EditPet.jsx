@@ -20,7 +20,7 @@ const EditPet = () => {
   useEffect(() => {
     const fetchPet = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/${id}`);
+        const response = await axios.get(`https://pet-adoption-project.onrender.com/api/${id}`);
         setPet(response.data);
       } catch (err) {
         console.error('Error fetching pet:', err);
@@ -47,7 +47,7 @@ const EditPet = () => {
     e.preventDefault();
     try {
         
-      await axios.put(`http://localhost:3006/api/${id}`, pet, {
+      await axios.put(`https://pet-adoption-project.onrender.com/api/${id}`, pet, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },

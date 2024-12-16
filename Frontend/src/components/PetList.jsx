@@ -15,7 +15,7 @@ const PetList = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/api/pets', {
+        const response = await axios.get('https://pet-adoption-project.onrender.com/api/pets', {
             params: {
             searchTerm,
             size: sizeFilter,
@@ -38,7 +38,7 @@ const PetList = () => {
   const handleDelete = async (petId) => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
       try {
-        const response = await axios.delete(`http://localhost:3006/api/${petId}`, {
+        const response = await axios.delete(`https://pet-adoption-project.onrender.com/api/${petId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -99,7 +99,7 @@ const PetList = () => {
             <div className="pet-image">
               {pet.photos?.length > 0 ? (
                 <img
-                  src={`http://localhost:3006/${pet.photos[0]}`}
+                  src={`https://pet-adoption-project.onrender.com/${pet.photos[0]}`}
                   alt={pet.name}
                   className="w-full h-48 object-cover"
                 />

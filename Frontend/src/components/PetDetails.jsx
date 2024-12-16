@@ -16,7 +16,7 @@ const PetDetails = () => {
   useEffect(() => {
     const fetchPetDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/${petId}`);
+        const response = await axios.get(`https://pet-adoption-project.onrender.com/api/${petId}`);
         setPet(response.data);
         setLoading(false);
       } catch (err) {
@@ -36,7 +36,7 @@ const PetDetails = () => {
   const handleSubmitApplication = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.post('http://localhost:3006/api/adoption/apply', {
+      const response = await axios.post('https://pet-adoption-project.onrender.com/api/adoption/apply', {
         petId: pet._id,
         shelterId: pet.shelterId, // Assuming the shelterId is available from the pet data
         reasonForAdoption: reasonForAdoption,
@@ -68,7 +68,7 @@ const PetDetails = () => {
       <div className="pet-info text-center">
         <h2 className="text-2xl font-bold mb-4">Pet Details</h2>
         <img
-          src={`http://localhost:3006/${pet.photos}`}
+          src={`https://pet-adoption-project.onrender.com/${pet.photos}`}
           alt={pet.name} 
           className="w-full h-64 object-cover mb-4 items-center"
         />

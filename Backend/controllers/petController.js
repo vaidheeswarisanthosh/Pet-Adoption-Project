@@ -1,7 +1,7 @@
 
 
 const Pet = require("../models/pet");
-const Shelter = require("../models/Shelter");
+const Shelter = require("../models/shelter");
 const User = require("../models/user");
 
 exports.addPet = async (req, res) => {

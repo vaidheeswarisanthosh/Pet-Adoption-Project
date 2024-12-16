@@ -15,22 +15,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-// app.use('/uploads', express.static('uploads')); // Serve static files
 
-
-// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-
-// app.use(
-//     "/uploads",
-//     express.static(path.join(__dirname, "uploads"), {
-//       setHeaders: (res, path, stat) => {
-//         if (path.endsWith(".mp4")) {
-//           res.set("Content-Type", "video/mp4");
-//         }
-//       },
-//     })
-//   );
+// Test Route
+app.get('/', (req, res) => {
+  res.send('API is working!');
+});
 
 
 // Serve the file with the correct content type

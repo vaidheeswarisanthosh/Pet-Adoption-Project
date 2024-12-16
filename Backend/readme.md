@@ -59,3 +59,11 @@
 # Delete a User
 
 # End Point : DELETE /api/users/admin/:userId
+
+
+
+
+
+# Detailed documentation for each API endpoint in Postman.
+
+# https://documenter.getpostman.com/view/38636115/2sAYHzHNqH 

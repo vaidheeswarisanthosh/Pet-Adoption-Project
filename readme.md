@@ -1,3 +1,6 @@
+# Pet Adoption Platform:
+
+
 # Project Work Flow:
 
 # User Roles and Registration
@@ -92,7 +95,7 @@ Save to the database and display on the platform.
 
 Manage all users (adopters, shelters, and admins).
 
-View and moderate all pet profiles and adoption applications.
+View and moderate all pet profiles .
 
 
 # Logout Button
@@ -115,3 +118,10 @@ Backend: Node.js, Express.js
 Database: MongoDB
 
 Authentication: JWT-based secure login
+
+
+
+
+# Detailed documentation for each API endpoint in Postman.
+
+# https://documenter.getpostman.com/view/38636115/2sAYHzHNqH 

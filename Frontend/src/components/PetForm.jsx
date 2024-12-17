@@ -67,7 +67,7 @@ const PetForm = () => {
 
     try {
       // Send POST request with token in Authorization header
-      const response = await axios.post('https://pet-adoption-project.onrender.com/api/pets/add', formData, {
+      const response = await axios.post('http://localhost:3006/api/pets', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

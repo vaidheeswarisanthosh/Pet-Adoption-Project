@@ -14,7 +14,7 @@ const AdminDashboard = () => {
   // Fetch users when the "Fetch Users" button is clicked
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://pet-adoption-project.onrender.com/api/users/admin', {
+      const response = await axios.get('http://localhost:3006/api/users/admin', {
         headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` },
       });
       setUsers(response.data);
@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   const handleUpdateRole = async (userId, role) => {
     try {
       await axios.put(
-        `https://pet-adoption-project.onrender.com/api/users/admin/${userId}`,
+        `http://localhost:3006/api/users/admin/${userId}`,
         { role },
         { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } }
       );
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`https://pet-adoption-project.onrender.com/api/users/admin/${userId}`, {
+        await axios.delete(`http://localhost:3006/api/users/admin/${userId}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` },
         });
         alert('User deleted successfully');

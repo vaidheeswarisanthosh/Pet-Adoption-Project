@@ -4,52 +4,110 @@ const Pet = require("../models/pet");
 const Shelter = require("../models/shelter");
 const User = require("../models/user");
 
+
+
+const cloudinary = require("../config/cloudinaryConfig");
+
 exports.addPet = async (req, res) => {
   try {
-    const shelterId = req.params.shelterId;
-    // Ensure the user is a shelter
-    
-
-      // Ensure the user is authenticated and has a shelterId
-      if (!req.user || !req.user.id) {
-        return res.status(401).json({ message: "Authentication token is missing or invalid." });
-      }
-
-       // Ensure the user has the 'shelter' role
-    if (req.user.role !== "Shelter" && req.user.role !== "Admin") {
-      return res.status(403).json({ message: "Only shelters can add pets." });
+    // Check authentication and role
+    if (!req.user || req.user.role !== "Shelter") {
+      return res.status(403).json({ message: "Access denied." });
     }
 
-    // Handle uploaded files
-    const photos = req.files["photos"]?.map((file) => file.path) || [];
-    const videos = req.files["videos"]?.map((file) => file.path) || [];
+    const photos = [];
+    const videos = [];
 
-    // Prepare pet data
+    // Upload photos to Cloudinary
+    if (req.files.photos) {
+      for (const file of req.files.photos) {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: "pet_adoption/photos",
+          resource_type: "image",
+        });
+        photos.push(result.secure_url);
+      }
+    }
+
+    // Upload videos to Cloudinary
+    if (req.files.videos) {
+      for (const file of req.files.videos) {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: "pet_adoption/videos",
+          resource_type: "video",
+        });
+        videos.push(result.secure_url);
+      }
+    }
+
+    // Create pet entry
     const petData = {
       ...req.body,
       photos,
       videos,
-      shelterId: req.user.id
-     
-      
+      shelterId: req.user.id,
     };
 
-    // Validate shelter existence
-    // const shelter = await Shelter.findById(req.user.id);
-    // if (!shelter) {
-    //   return res.status(404).json({ message: "Shelter not found!" });
-    // }
-
-    // Create and save the pet
     const pet = new Pet(petData);
     await pet.save();
 
     res.status(201).json({ message: "Pet added successfully!", pet });
   } catch (error) {
-    console.error("Error adding pet:", error);
-    res.status(400).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+
+
+
+
+// exports.addPet = async (req, res) => {
+//   try {
+//     const shelterId = req.params.shelterId;
+//     // Ensure the user is a shelter
+    
+
+//       // Ensure the user is authenticated and has a shelterId
+//       if (!req.user || !req.user.id) {
+//         return res.status(401).json({ message: "Authentication token is missing or invalid." });
+//       }
+
+//        // Ensure the user has the 'shelter' role
+//     if (req.user.role !== "Shelter" && req.user.role !== "Admin") {
+//       return res.status(403).json({ message: "Only shelters can add pets." });
+//     }
+
+//     // Handle uploaded files
+//     const photos = req.files["photos"]?.map((file) => file.path) || [];
+//     const videos = req.files["videos"]?.map((file) => file.path) || [];
+
+//     // Prepare pet data
+//     const petData = {
+//       ...req.body,
+//       photos,
+//       videos,
+//       shelterId: req.user.id
+     
+      
+//     };
+
+  
+//     // Create and save the pet
+//     const pet = new Pet(petData);
+//     await pet.save();
+
+//     res.status(201).json({ message: "Pet added successfully!", pet });
+//   } catch (error) {
+//     console.error("Error adding pet:", error);
+//     res.status(400).json({ error: error.message });
+//   }
+// };
+
+
+
+
 
 // // Get all pets with filters
 // exports.getPets = async (req, res) => {

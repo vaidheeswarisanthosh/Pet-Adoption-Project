@@ -38,7 +38,7 @@ const PetList = () => {
   const handleDelete = async (petId) => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
       try {
-        const response = await axios.delete(`https://pet-adoption-project.onrender.com/api/${petId}`, {
+        const response = await axios.delete(`https://pet-adoption-project.onrender.com/api/pets/${petId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },

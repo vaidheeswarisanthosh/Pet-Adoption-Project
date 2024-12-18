@@ -47,7 +47,7 @@ const EditPet = () => {
     e.preventDefault();
     try {
         
-      await axios.put(`http://localhost:3006/api/${id}`, pet, {
+      await axios.put(`https://pet-adoption-project.onrender.com/api/${id}`, pet, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },

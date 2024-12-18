@@ -21,7 +21,7 @@ const AdoptionForm = ({ petId, shelterId }) => {
 
     try {
       const token = localStorage.getItem('authToken');
-      const response = await axios.post('http://localhost:3006/api/adoption/apply', payload, {
+      const response = await axios.post('https://pet-adoption-project.onrender.com/api/adoption/apply', payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -10,6 +10,7 @@ const adoptionRoutes=require('./routes/adoptionRoutes');
 const cookieParser = require('cookie-parser');
 
 
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -21,27 +22,22 @@ app.get('/', (req, res) => {
   res.send('API is working!');
 });
 
-
-// Serve the file with the correct content type
 app.get('/uploads/:filename', (req, res) => {
-    const filePath = path.join(__dirname, 'uploads', req.params.filename);
-    const fileExtension = path.extname(filePath).toLowerCase();
-  
-    // Manually set the correct MIME type
-    if (fileExtension === '.jpg' || fileExtension === '.jpeg') {
-      res.setHeader('Content-Type', 'image/jpeg');
-    } else if (fileExtension === '.mp4') {
-      res.setHeader('Content-Type', 'video/mp4');
-    } else {
-      res.setHeader('Content-Type', 'application/octet-stream'); // Default
-    }
-  
-    // Send the file
-    fs.createReadStream(filePath).pipe(res);
-  });
+  const filePath = path.join(__dirname, 'uploads', req.params.filename);
+  const fileExtension = path.extname(filePath).toLowerCase();
 
+  // Manually set the correct MIME type
+  if (fileExtension === '.jpg' || fileExtension === '.jpeg') {
+    res.setHeader('Content-Type', 'image/jpeg');
+  } else if (fileExtension === '.mp4') {
+    res.setHeader('Content-Type', 'video/mp4');
+  } else {
+    res.setHeader('Content-Type', 'application/octet-stream'); // Default
+  }
 
-
+  // Send the file
+  fs.createReadStream(filePath).pipe(res);
+});
 
 
 

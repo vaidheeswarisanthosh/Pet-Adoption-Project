@@ -5,13 +5,7 @@ const Shelter = require("../models/shelter");
 const User = require("../models/user");
 
 
-
-
-
-
-
-
-
+// Add a new pet with photos and videos
 
 exports.addPet = async (req, res) => {
   try {

@@ -1,7 +1,9 @@
 const express = require('express');
 const multer = require('multer');
 
+
 const {authenticate}= require("../middlewares/authenticate");
+
 const {
   addPet,
   getPets,
@@ -21,8 +23,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Routes
 router.post('/pets',authenticate, upload.fields([{ name: 'photos' }, { name: 'videos' }]), addPet);
+
+
+
 
 
 

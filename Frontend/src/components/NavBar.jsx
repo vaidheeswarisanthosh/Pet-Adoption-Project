@@ -37,8 +37,8 @@ const NavBar = () => {
     }
   };
 return (
-    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full z-50">
-      <h1 className="text-xl font-bold tracking-wide">Pet Adoption Platform</h1>
+    <nav className="bg-rose-200 text-white p-4 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full z-50">
+      <h1 className="text-xl font-bold tracking-wide text-blue-950">Pet Adoption Platform</h1>
 
       {/* Hamburger Icon for mobile view */}
       <button
@@ -55,7 +55,7 @@ return (
       >
         <Link
           to="/"
-          className="text-lg font-medium hover:text-blue-300 transition-colors py-2 text-white"
+          className="text-lg font-medium hover:text-blue-300 transition-colors py-2 text-blue-950"
           aria-label="Go to Home"
         >
           Register
@@ -83,7 +83,7 @@ return (
           <>
             <Link
               to="/login"
-              className="text-lg font-medium hover:text-blue-300 transition-colors py-2 text-white"
+              className="text-lg font-medium hover:text-blue-300 transition-colors py-2 text-blue-950"
               aria-label="Login"
             >
               Login

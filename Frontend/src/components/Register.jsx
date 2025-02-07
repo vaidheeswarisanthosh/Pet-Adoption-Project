@@ -103,7 +103,7 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full py-3 bg-green-300 text-blue-950 rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Register
           </button>
@@ -112,7 +112,7 @@ const Register = () => {
           <span className="text-gray-600">Already have an account? </span>
           <button
             onClick={handleLoginRedirect}
-            className="text-blue-600 hover:text-blue-800"
+            className="text-blue-900 hover:text-blue-800"
           >
             Login
           </button>

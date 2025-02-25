@@ -24,7 +24,7 @@ exports.addPet = async (req, res) => {
     }
 
     // Handle uploaded files
-    const photos = req.files["photos"]?.map((file) => file.path) || [];
+    // const photos = req.files["photos"]?.map((file) => file.path) || [];
     
 
     // Prepare pet data

@@ -30,15 +30,25 @@ exports.addPet = async (req, res) => {
     
     
     // Prepare pet data
-    const petData = {
-      ...req.body,
-      // photos,
+    // const petData = {
+    //   ...req.body,
+    //   // photos,
       
-      shelterId: req.user.id
+    //   shelterId: req.user.id
      
       
-    };
+    // };
     
+    const petData = {
+      name,
+      age: Number(age),
+      breed,
+      size,
+      color,
+      medicalHistory,
+      // photos: [],
+      shelterId: req.user.id,
+    };
   
     // Create and save the pet
     const pet = new Pet(petData);

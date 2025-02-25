@@ -50,7 +50,6 @@ exports.addPet = async (req, res) => {
       shelterId: req.user.id,
     };
   
-    // Create and save the pet
     const pet = new Pet(petData);
     await pet.save();
 

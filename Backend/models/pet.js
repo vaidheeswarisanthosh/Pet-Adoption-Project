@@ -4,7 +4,7 @@ const petSchema = new mongoose.Schema({
   name: { type: String, },
   age: { type: Number, },
   breed: { type: String,  },
-  size: { type: String, enum: ['Small', 'Medium', 'Large'],  },
+  size: { type: String, enum: ['Small', 'Medium', 'Large']  },
   color: { type: String,  },
   medicalHistory: { type: String },
   photos: { type: [String] },

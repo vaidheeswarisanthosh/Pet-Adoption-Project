@@ -41,7 +41,7 @@ exports.addPet = async (req, res) => {
     
     const petData = {
       name,
-      age: Number(age),
+      age,
       breed,
       size,
       color,

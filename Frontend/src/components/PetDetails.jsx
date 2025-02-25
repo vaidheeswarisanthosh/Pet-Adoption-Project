@@ -67,11 +67,11 @@ const PetDetails = () => {
     <div className="container mx-auto p-6 mt-12 text-bold">
       <div className="pet-info text-center">
         <h2 className="text-2xl font-bold mb-4">Pet Details</h2>
-        <img
+        {/* <img
           src={`https://pet-adoption-project.onrender.com/${pet.photos}`}
-          alt={pet.name} 
+          // alt={pet.name} 
           className="w-full h-64 object-cover mb-4 items-center"
-        />
+        /> */}
         <h1 className="text-xl font-bold">{pet.name}</h1>
         <p>Age: {pet.age}</p>
         <p>Breed: {pet.breed}</p>

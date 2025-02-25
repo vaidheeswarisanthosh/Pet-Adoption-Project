@@ -107,12 +107,14 @@ const PetList = () => {
                 <p className="text-center text-gray-500 p-4">No photo available</p>
               )}
             </div> */}
-            <h3 className="text-lg font-semibold">Name: {pet.name}</h3>
+            <h3>Name: {pet.name}</h3>
             <h3>Age: {pet.age}</h3>
             <p>Breed: {pet.breed}</p>
             <p>Size: {pet.size}</p>
+            <p>Color: {pet.color}</p>
+            <p>Medical History: {pet.medicalHistory}</p>
             <p>Status: {pet.status}</p>
-
+            <p></p>
             {/* Show "More Details" button for Adopters only */}
             {user.role === 'Adopter' && (
               <Link

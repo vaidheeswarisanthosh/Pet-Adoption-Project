@@ -8,13 +8,15 @@ const path = require('path');
 const userRoutes=require('./routes/userRoutes');
 const adoptionRoutes=require('./routes/adoptionRoutes');
 const cookieParser = require('cookie-parser');
-
+const multer = require("multer");
 
 
 
 
 app.use(cors());
 app.use(express.json());
+const upload = multer();
+app.use(upload.none()); 
 app.use(cookieParser());
 
 app.use(bodyParser.json());

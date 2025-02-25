@@ -26,10 +26,6 @@ const router = express.Router();
 // router.post('/pets',authenticate, upload.fields([{ name: 'photos' }, { name: 'videos' }]), addPet);
 
 router.post('/pets',authenticate, addPet);
-
-
-
-
 router.get('/pets', getPets);
 router.get('/:id', getPetById);
 router.put('/:id',authenticate, updatePet);

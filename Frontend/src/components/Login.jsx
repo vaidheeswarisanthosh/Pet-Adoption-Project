@@ -27,7 +27,7 @@ const Login = () => {
 
         // Store token in localStorage for persistence
         localStorage.setItem('authToken', token);
-
+        localStorage.setItem('role', role); //Store user role here!
         console.log('Login successful, User role:', role);
 
         // Redirect based on user role

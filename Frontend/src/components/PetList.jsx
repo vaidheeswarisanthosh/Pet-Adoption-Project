@@ -93,28 +93,29 @@ const PetList = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-20">
         {pets.map((pet) => (
           <div key={pet._id} className="p-4 bg-white shadow-md rounded-md">
-            {/* <div className="pet-image">
-              {pet.photos?.length > 0 ? (
-                <img
-                  src={`https://pet-adoption-project.onrender.com/${pet.photos[0]}`}
-                  alt={pet.name}
-                  className="w-full h-48 object-cover"
-                />
-              ) : (
-                <p className="text-center text-gray-500 p-4">No photo available</p>
-              )}
-            </div> */}
-            <h3>Name: {pet.name}</h3>
+           
+            <h3 className='text-lg font-bold'>Name: {pet.name}</h3>
             <h3>Age: {pet.age}</h3>
             <p>Breed: {pet.breed}</p>
             <p>Size: {pet.size}</p>
             <p>Color: {pet.color}</p>
             <p>Medical History: {pet.medicalHistory}</p>
             <p>Status: {pet.status}</p>
-            <p></p>
+            <div className="pet-image">
+            {pet.photos?.length > 0 ? (
+            <img
+            src={pet.photos[0]}  // Uses the stored Google Drive direct URL
+           alt={pet.name}
+            className="w-40 h-40 object-cover rounded-lg shadow-lg"
+         
+            />
+          ) : (
+           <p className="text-center text-gray-500 p-4">No photo available</p>
+          )}
+          </div>
             {/* Show "More Details" button for Adopters only */}
             {user.role === 'Adopter' && (
               <Link

@@ -57,7 +57,7 @@ const EditPet = () => {
       // Redirect based on the user's role
 
       // Retrieve the user's role
-  const userRole = localStorage.getItem('role'); // Assuming role is stored in localStorage
+  const userRole = localStorage.getItem('role')?.toLowerCase(); // Assuming role is stored in localStorage
       console.log('User role:', userRole);
      if (userRole === 'Admin') {
     navigate('/dashboard/admin');

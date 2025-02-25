@@ -14,8 +14,8 @@ const EditPet = () => {
     medicalHistory: '',
     status: 'Available',
   });
-  const [selectedPhotos, setSelectedPhotos] = useState([]);
-  const [selectedVideos, setSelectedVideos] = useState([]);
+  // const [selectedPhotos, setSelectedPhotos] = useState([]);
+  // const [selectedVideos, setSelectedVideos] = useState([]);
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -34,14 +34,14 @@ const EditPet = () => {
     setPet((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e, type) => {
-    const files = Array.from(e.target.files);
-    if (type === 'photos') {
-      setSelectedPhotos([...selectedPhotos, ...files]);
-    } else if (type === 'videos') {
-      setSelectedVideos([...selectedVideos, ...files]);
-    }
-  };
+  // const handleFileChange = (e, type) => {
+  //   const files = Array.from(e.target.files);
+  //   if (type === 'photos') {
+  //     setSelectedPhotos([...selectedPhotos, ...files]);
+  //   } else if (type === 'videos') {
+  //     setSelectedVideos([...selectedVideos, ...files]);
+  //   }
+  // };
 
   const handleUpdate = async (e) => {
     e.preventDefault();

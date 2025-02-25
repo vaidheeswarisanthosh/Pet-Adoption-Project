@@ -12,7 +12,7 @@ const PetForm = () => {
     size: '',
     color: '',
     medicalHistory: '',
-    // photos: [],
+    photos: [],
     
   });
   const [token, setToken] = useState(null); // Store token state
@@ -58,9 +58,9 @@ const PetForm = () => {
     formData.append('color', petData.color);
     formData.append('medicalHistory', petData.medicalHistory);
 
-    // for (let i = 0; i < petData.photos.length; i++) {
-    //   formData.append('photos', petData.photos[i]);
-    // }
+    for (let i = 0; i < petData.photos.length; i++) {
+      formData.append('photos', petData.photos[i]);
+    }
     
 
     try {
@@ -82,7 +82,7 @@ const PetForm = () => {
         size: '',
         color: '',
         medicalHistory: '',
-        // photos: [],
+        photos: [],
         
       });
     } catch (error) {
@@ -172,7 +172,7 @@ const PetForm = () => {
           ></textarea>
         </div>
 
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="photos" className="block text-sm font-medium text-gray-700">Photos</label>
           <input
             type="file"
@@ -183,7 +183,7 @@ const PetForm = () => {
             onChange={handleFileChange}
             className="w-full p-2 border border-gray-300 rounded-md"
           />
-        </div> */}
+        </div>
 
       
         

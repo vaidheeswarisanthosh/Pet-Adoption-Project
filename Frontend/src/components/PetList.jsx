@@ -96,7 +96,7 @@ const PetList = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {pets.map((pet) => (
           <div key={pet._id} className="p-4 bg-white shadow-md rounded-md">
-            <div className="pet-image">
+            {/* <div className="pet-image">
               {pet.photos?.length > 0 ? (
                 <img
                   src={`https://pet-adoption-project.onrender.com/${pet.photos[0]}`}
@@ -106,7 +106,7 @@ const PetList = () => {
               ) : (
                 <p className="text-center text-gray-500 p-4">No photo available</p>
               )}
-            </div>
+            </div> */}
             <h3 className="text-lg font-semibold">Name: {pet.name}</h3>
             <h3>Age: {pet.age}</h3>
             <p>Breed: {pet.breed}</p>

@@ -12,8 +12,8 @@ const PetForm = () => {
     size: '',
     color: '',
     medicalHistory: '',
-    photos: [],
-    videos: [],
+    // photos: [],
+    
   });
   const [token, setToken] = useState(null); // Store token state
 
@@ -58,12 +58,10 @@ const PetForm = () => {
     formData.append('color', petData.color);
     formData.append('medicalHistory', petData.medicalHistory);
 
-    for (let i = 0; i < petData.photos.length; i++) {
-      formData.append('photos', petData.photos[i]);
-    }
-    for (let i = 0; i < petData.videos.length; i++) {
-      formData.append('videos', petData.videos[i]);
-    }
+    // for (let i = 0; i < petData.photos.length; i++) {
+    //   formData.append('photos', petData.photos[i]);
+    // }
+    
 
     try {
       // Send POST request with token in Authorization header
@@ -84,8 +82,8 @@ const PetForm = () => {
         size: '',
         color: '',
         medicalHistory: '',
-        photos: [],
-        videos: [],
+        // photos: [],
+        
       });
     } catch (error) {
       console.error('Error adding pet:', error.response ? error.response.data : error.message);
@@ -174,7 +172,7 @@ const PetForm = () => {
           ></textarea>
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="photos" className="block text-sm font-medium text-gray-700">Photos</label>
           <input
             type="file"
@@ -185,20 +183,9 @@ const PetForm = () => {
             onChange={handleFileChange}
             className="w-full p-2 border border-gray-300 rounded-md"
           />
-        </div>
+        </div> */}
 
-        <div className="mb-4">
-          <label htmlFor="videos" className="block text-sm font-medium text-gray-700">Videos</label>
-          <input
-            type="file"
-            id="videos"
-            name="videos"
-            accept="video/*"
-            multiple
-            onChange={handleFileChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
+      
         
        
         <button

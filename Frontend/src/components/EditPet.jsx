@@ -81,14 +81,14 @@ const EditPet = () => {
       <h2 className="text-lg font-bold mb-4">Edit Pet</h2>
       
       
-      <input
+      {/* <input
             name="photos"
             type="file"
             multiple
             accept="image/*"
             onChange={(e) => handleFileChange(e, 'photos')}
             className="w-full border p-2"
-          /> 
+          />  */}
      
       <input
         name="name"
@@ -142,13 +142,13 @@ const EditPet = () => {
         className="block w-full mb-4 p-2 border rounded"
       />
 
-         <input
+         {/* <input
             type="file"
             multiple
             accept="video/*"
             onChange={(e) => handleFileChange(e, 'videos')}
             className="w-full border p-2"
-          />
+          /> */}
       <button
         type="submit"
         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"

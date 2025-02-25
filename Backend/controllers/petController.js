@@ -9,6 +9,7 @@ const User = require("../models/user");
 
 exports.addPet = async (req, res) => {
   try {
+    console.log(req.body);
     const shelterId = req.params.shelterId;
     // Ensure the user is a shelter
     
@@ -24,19 +25,19 @@ exports.addPet = async (req, res) => {
     }
 
     // Handle uploaded files
-    const photos = req.files["photos"]?.map((file) => file.path) || [];
+    // const photos = req.files["photos"]?.map((file) => file.path) || [];
     
-
+    
     // Prepare pet data
     const petData = {
       ...req.body,
-      photos,
+      // photos,
       
       shelterId: req.user.id
      
       
     };
-
+    
   
     // Create and save the pet
     const pet = new Pet(petData);

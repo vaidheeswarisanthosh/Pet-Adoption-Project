@@ -9,7 +9,7 @@ const User = require("../models/user");
 
 exports.addPet = async (req, res) => {
   try {
-    const { name, age, breed, size, color, medicalHistory } = req.body;
+    const {name, age, breed, size, color, medicalHistory} = req.body;
 
     const shelterId = req.params.shelterId;
     // Ensure the user is a shelter

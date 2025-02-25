@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const User = require('./user');
 const petSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  age: { type: Number, required: true },
-  breed: { type: String, required: true },
-  size: { type: String, enum: ['Small', 'Medium', 'Large'], required: true },
-  color: { type: String, required: true },
+  name: { type: String, },
+  age: { type: Number, },
+  breed: { type: String,  },
+  size: { type: String, enum: ['Small', 'Medium', 'Large'],  },
+  color: { type: String,  },
   medicalHistory: { type: String },
   photos: { type: [String] },
  
